@@ -1,0 +1,46 @@
+name: Metrics
+on:
+  schedule:
+    - cron: "0 0 * * *"   # runs daily
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: lowlighter/metrics@latest
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          filename: github-metrics.svg
+
+          # Core config
+          user: yashwanthyashka
+          template: classic
+          base: header, activity, community, repositories, metadata
+
+          # Plugins shown in the image
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
+
+          plugin_languages: yes
+          plugin_languages_indepth: yes
+          plugin_languages_details: lines, percentage
+
+          plugin_activity: yes
+          plugin_activity_limit: 5
+
+          plugin_habits: yes
+          plugin_habits_facts: yes
+          plugin_habits_charts: yes
+
+          plugin_topics: yes
+          plugin_topics_mode: mastered
+
+          plugin_pagespeed: yes
+          plugin_pagespeed_url: https://yashwanthportfolio.framer.ai
+          plugin_pagespeed_detailed: yes
+          plugin_pagespeed_screenshot: yes
